@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -92,4 +93,21 @@ public class SocialMediaController {
         }
     }
 
+    @PatchMapping("messages/{messageId}")
+    public ResponseEntity<?> updateMessage(@PathVariable Integer messageId, @RequestBody Message message){
+        String newMessageText = message.getMessageText();
+        try{
+            int rowsaffected = messageService.updateMessage(messageId,newMessageText);
+            return ResponseEntity.ok(rowsaffected);
+        }
+        catch(IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("accounts/{accountId}/messages")
+    public ResponseEntity<List<Message>> getMessageByUser(@PathVariable Integer accountId){
+        List<Message> messages = messageService.getMessageByUser(accountId);
+        return ResponseEntity.ok(messages);
+    }
 }
