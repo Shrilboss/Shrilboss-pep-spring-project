@@ -38,14 +38,16 @@ public class AccountService {
     public Account login(Account login_account) {
         String username = login_account.getUsername();
         String password = login_account.getPassword();
+        // Check if username is blank
         if (username == null || username.length()==0) {
             throw new IllegalArgumentException("Username cannot be blank");
         }
-
+        // Check if password is blank
         if (password == null || password.length()==0) {
             throw new IllegalArgumentException("Password cannot be blank");
         }
 
+        //If no account found
         Account account = accountRepository.findByUsernameAndPassword(username, password);
         if (account == null) {
             throw new IllegalArgumentException("Invalid username or password");

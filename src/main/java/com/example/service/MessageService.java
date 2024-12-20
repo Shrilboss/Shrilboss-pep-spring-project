@@ -45,7 +45,9 @@ public class MessageService {
     }
 
     public int deleteMessageById(Integer messageId) {
+        //Check if message exists with given Id
         if(messageRepository.existsById(messageId)){
+            //Delete the message with given Id
             messageRepository.deleteById(messageId);
             return 1;
         }
@@ -53,10 +55,12 @@ public class MessageService {
     }
 
     public int updateMessage(Integer messageId, String newMessageText) {
+        //Check if messageText is not blank and under 255 characters
         if(newMessageText == null || newMessageText.length()==0 || newMessageText.length()>255){
             throw new IllegalArgumentException("MessageText is invalid");
         }
 
+        //Check if message exists with given Id
         Optional<Message> existingMessage = messageRepository.findById(messageId);
         if (existingMessage.isPresent()) {
             Message updatedmessage = existingMessage.get();
