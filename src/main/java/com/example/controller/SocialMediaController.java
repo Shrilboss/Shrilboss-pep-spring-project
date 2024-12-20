@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException.Conflict;
 
 import com.example.entity.Account;
+import com.example.entity.Message;
 import com.example.service.AccountService;
 import com.example.service.MessageService;
 
@@ -48,6 +49,17 @@ public class SocialMediaController {
             return ResponseEntity.ok(checkedAccount);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("messages")
+    public ResponseEntity<?> messages(@RequestBody Message message){
+        try{
+            Message createdMessage = messageService.createMessage(message);
+            return ResponseEntity.ok(createdMessage);
+        }
+        catch(IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }
