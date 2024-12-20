@@ -38,4 +38,16 @@ public class MessageService {
     public List<Message> getAllMessages() {
         return messageRepository.findAll();
     }
+
+    public Message getMessageById(Integer messageId) {
+        return messageRepository.findByMessageId(messageId);
+    }
+
+    public int deleteMessageById(Integer messageId) {
+        if(messageRepository.existsById(messageId)){
+            messageRepository.deleteById(messageId);
+            return 1;
+        }
+        return 0;
+    }
 }

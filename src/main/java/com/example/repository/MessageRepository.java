@@ -9,6 +9,7 @@ import com.example.entity.Message;
 
 //Similar to MessageDAO
 @Repository
-public interface MessageRepository extends JpaRepository<Message, Long>{
+public interface MessageRepository extends JpaRepository<Message, Integer>{
     List<Message> findAll();
+    Message findByMessageId(Integer messageId);
 }
